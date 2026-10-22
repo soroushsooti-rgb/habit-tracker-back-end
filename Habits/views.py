@@ -8,8 +8,18 @@ from .serializers import Habitserializers, HabitCheckSerializers
 class HabitView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        user_id = request.user.id
+    # ai
+    def get(self, request, pk=None):
+        if pk is not None:
+            habit = Habit.objects.filter(pk=pk, user=request.user).first()
+            if not habit:
+                return Response({"detail": "عادت پیدا نشد."}, status=404)
+            serializer = Habitserializers(habit)
+            return Response(serializer.data)
+
+        # ai
+        
+
         habits = Habit.objects.filter(user=request.user)
         serializer = Habitserializers(habits, many=True)
         return Response(serializer.data)
@@ -21,11 +31,32 @@ class HabitView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+    def delete(self, request, pk):
+        habit = Habit.objects.filter(
+            pk=pk,
+            user=request.user
+        ).first()
+
+        if not habit:
+            return Response({"detail": "عادت پیدا نشد."}, status=404)
+
+        habit.delete()
+        return Response(status=204)
+
 
 class ChekingView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+
+    def get(self, request, pk=None):
+        if pk is not None:
+            check = HabitCheck.objects.filter(
+                pk=pk, habit__user=request.user).first()
+            if not check:
+                return Response({"detail": "چک پیدا نشد."}, status=404)
+            serializer = HabitCheckSerializers(check)
+            return Response(serializer.data)
+
         checks = HabitCheck.objects.filter(habit__user=request.user)
         serializer = HabitCheckSerializers(checks, many=True)
         return Response(serializer.data)
@@ -36,3 +67,12 @@ class ChekingView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk):
+        check = HabitCheck.objects.filter(
+            pk=pk, habit__user=request.user
+        ).first()
+        if not check:
+            return Response({"detail": "چک پیدا نشد."}, status=404)
+        check.delete()
+        return Response(status=204)

@@ -5,8 +5,16 @@ from .models import Habit, HabitCheck
 class Habitserializers(serializers.ModelSerializer):
     class Meta:
         model = Habit
-        fields = ['id', 'name', 'user', 'frequency',
-                  'dat_of_week', 'day_of_month', 'created_at']
+        fields = [
+            'id',
+            'name',
+            'user',
+            'frequency',
+            'day_of_week',
+            'day_of_month',
+            'reminder_time',
+            'created_at',
+        ]
         read_only_fields = ['id', 'user', 'created_at']
 
 
