@@ -40,7 +40,9 @@ INSTALLED_APPS = [
 ]
 INSTALLED_APPS += [
     'accounts',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken',
+    'Habits'
 ]
 
 MIDDLEWARE = [
@@ -129,4 +131,4 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
-AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = 'accounts.user'
