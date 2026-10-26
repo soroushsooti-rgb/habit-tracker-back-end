@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/habit/habits"
+method: GET
+headers:
+  Authorization: "{{token_type}} {{auth_token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", () => pm.response.to.have.status(200));
+      const body = pm.response.json();
+      pm.test("Response is array or paginated object", () => { pm.expect(Array.isArray(body) || (typeof body === "object" && body !== null && ("results" in body || "count" in body))).to.be.true; });
+    language: text/javascript
+order: 1000

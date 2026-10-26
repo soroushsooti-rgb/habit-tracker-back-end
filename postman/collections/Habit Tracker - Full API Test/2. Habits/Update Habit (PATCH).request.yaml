@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{base_url}}/habit/habits/{{habit_id}}"
+method: PATCH
+headers:
+  Authorization: "{{token_type}} {{auth_token}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: '{"name": "Morning Reading Updated"}'
+order: 4000

@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/accounts/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: '{"username": "testuser1", "password": "Test@12345"}'
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", () => pm.response.to.have.status(200));
+      const body = pm.response.json();
+      const token = body.token || body.key || body.access;
+      if (token) { pm.collectionVariables.set("auth_token", token); pm.test("Token saved", () => pm.expect(token).to.be.a("string")); }
+    language: text/javascript
+order: 2000

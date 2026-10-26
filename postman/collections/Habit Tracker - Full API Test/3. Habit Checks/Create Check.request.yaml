@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/habit/checks"
+method: POST
+headers:
+  Authorization: "{{token_type}} {{auth_token}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: '{"habit": "{{habit_id}}"}'
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 201", () => pm.response.to.have.status(201));
+      const body = pm.response.json();
+      if (body.id) { pm.collectionVariables.set("check_id", body.id); }
+    language: text/javascript
+order: 2000

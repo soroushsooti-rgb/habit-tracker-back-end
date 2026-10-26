@@ -2,6 +2,10 @@
 workspace:
   id: 135c8180-267a-4407-a7f4-35b95efc8093
 
+cloudResources:
+  collections:
+    ../postman/collections/Habit Tracker - Full API Test: a11cb493-d851-46ae-a9e5-60241c754f49
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:

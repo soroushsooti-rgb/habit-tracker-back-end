@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/habit/checks"
+method: GET
+headers:
+  Authorization: "{{token_type}} {{auth_token}}"
+order: 1000

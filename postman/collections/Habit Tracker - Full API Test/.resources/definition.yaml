@@ -1,0 +1,20 @@
+$kind: collection
+description: |-
+  کالکشن کامل تست API برنامه Habit Tracker (Django REST Framework).
+
+  راهنمای استفاده:
+  1) متغیر base_url را روی آدرس سرور خود تنظیم کنید (پیش‌فرض: http://127.0.0.1:8000).
+  2) ابتدا درخواست‌های Register و سپس Login را در پوشه «1. Auth» اجرا کنید تا توکن به‌صورت خودکار در متغیر auth_token ذخیره شود.
+  3) بقیه درخواست‌ها را با Collection Runner اجرا کنید (ترتیب: Create Habit، سپس بقیه). متغیر token_type روی Token تنظیم شده است؛ اگر پروژه از JWT استفاده می‌کند، مقدار آن را به Bearer تغییر دهید.
+variables:
+  base_url: http://127.0.0.1:8000
+  auth_token: ""
+  token_type: Token
+  habit_id: ""
+  check_id: ""
+scripts:
+  - type: http:afterResponse
+    code: |-
+      pm.test("Status code is 2xx", () => pm.response.to.be.success);
+      pm.test("Response time < 1500ms", () => pm.expect(pm.response.responseTime).to.be.below(1500));
+    language: text/javascript
