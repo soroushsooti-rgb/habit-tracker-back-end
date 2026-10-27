@@ -1,12 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
 
-    path('habits', views.HabitView.as_view(), name='habit-list'),
-    path('habits/<int:pk>', views.HabitView.as_view(), name='habit-detail'),
+    path('habits/', include([path("", views.HabitView.as_view(), name='habit-list'),
+                            path('<int:pk>', views.HabitView.as_view(), name='habit-detail')])),
 
 
-    path('checks', views.ChekingView.as_view(), name='checking-list'),
-    path('checks/<int:pk>', views.ChekingView.as_view(), name='checking-detail'),
+
+
+    path('checks/', include([path('', views.ChekingView.as_view(), name='checking-list'),
+                            path('<int:pk>', views.ChekingView.as_view(), name='checking-detail')]))
 ]
