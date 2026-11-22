@@ -42,7 +42,9 @@ INSTALLED_APPS += [
     'accounts',
     'rest_framework',
     'rest_framework.authtoken',
-    'Habits'
+    'Habits',
+    'corsheaders'
+
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -137,6 +141,11 @@ AUTH_USER_MODEL = 'accounts.user'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
     ],
 }
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:5500",
+]

@@ -18,6 +18,7 @@ class Habitserializers(serializers.ModelSerializer):
         read_only_fields = ['id', 'user', 'created_at']
 
 
+
 class HabitCheckSerializers (serializers.ModelSerializer):
     class Meta:
         model = HabitCheck
